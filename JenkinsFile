@@ -21,17 +21,21 @@ pipeline {
 
         stage('Lint, Scan, and Docker') {
             parallel {
-                stage('Lint') {
+               stage('Lint') {
                     steps {
                         script {
+                         echo 'Installing pip...'
+                            sh '''
+                         apt-get update && apt-get install -y python3-pip || yum install -y python3-pip
+                         pip3 install --upgrade pip
+                            '''
                             echo 'Linting the code'
-                            sh 'pip install flake8'
+                            sh 'pip3 install flake8'
                             sh 'flake8 .'
                             sh 'hadolint Dockerfile'
                         }
                     }
                 }
-
                 stage('Security Scanning') {
                     steps {
                         sh '''
