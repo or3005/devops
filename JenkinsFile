@@ -2,7 +2,7 @@ pipeline {
 
     // there will be more staff in here from the exam file
 
-    agent { label 'docker' }
+    agent any
 
     // add docker credentials in the Jenkins part
     environment {
