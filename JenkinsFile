@@ -1,0 +1,75 @@
+pipeline {
+
+    // there will be more staff in here from the exam file
+
+    agent any
+
+    // add docker credentials in the Jenkins part
+    environment {
+        DOCKER_IMAGE = "or3005/my-image"
+        DOCKER_CREDENTIALS = "docker-hub-credentials"
+    }
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                // I switch to docker branch to get the Dockerfile
+                git branch: 'docker', url: 'https://github.com/or3005/devops.git'
+            }
+        }
+
+        stage('Lint, Scan, and Docker') {
+            parallel {
+                stage('Lint') {
+                    steps {
+                        script {
+                            echo 'Linting the code'
+                            sh 'pip install flake8'
+                            sh 'flake8 .'
+                            sh 'hadolint Dockerfile'
+                        }
+                    }
+                }
+
+                stage('Security Scanning') {
+                    steps {
+                        sh '''
+                        trivy image $DOCKER_IMAGE || true
+                        bandit -r . || true
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo 'Building Docker image'
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: DOCKER_CREDENTIALS, variable: 'DOCKER_PASSWORD')]) {
+                    sh '''
+                    echo "$DOCKER_PASSWORD" | docker login -u or3005 --password-stdin
+                    docker push $DOCKER_IMAGE
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs.'
+        }
+    }
+}
