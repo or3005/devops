@@ -26,8 +26,8 @@ pipeline {
                         script {
                          echo 'Installing pip...'
                             sh '''
-                         apt-get update && apt-get install -y python3-pip || yum install -y python3-pip
-                         pip3 install --upgrade pip
+                            sudo apt-get update && sudo apt-get install -y python3-pip || sudo yum install -y python3-pip
+                            sudo pip3 install --upgrade pip
                             '''
                             echo 'Linting the code'
                             sh 'pip3 install flake8'
