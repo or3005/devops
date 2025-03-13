@@ -2,12 +2,12 @@ pipeline {
 
     // there will be more staff in here from the exam file
 
-    agent any
+    agent { label 'docker' }
 
     // add docker credentials in the Jenkins part
     environment {
         DOCKER_IMAGE = "or3005/my-image"
-        DOCKER_CREDENTIALS = "docker-hub-credentials"
+        DOCKER_CREDENTIALS = "dockerhub-credentials"
     }
 
     stages {
