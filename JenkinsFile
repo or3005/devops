@@ -1,7 +1,6 @@
 pipeline {
 
     // there will be more staff in here from the exam file
-
     agent any
 
     // add docker credentials in the Jenkins part
@@ -22,28 +21,24 @@ pipeline {
         stage('Lint, Scan, and Docker') {
             parallel {
                stage('Lint') {
-            //         steps {
-            //             script {
-            //              echo 'Installing pip...'
-            //                 sh '''
-            //                  apt-get update && sudo apt-get install -y python3-pip || sudo yum install -y python3-pip
-            //                  pip3 install --upgrade pip
-            //                 '''
+                    steps {
+                        script {
                             echo 'Linting the code'
-            //                 sh 'pip3 install flake8'
-            //                 sh 'flake8 .'
-            //                 sh 'hadolint Dockerfile'
-            //             }
-            //         }
-            //     }
-            //     stage('Security Scanning') {
-            //         steps {
-            //             sh '''
-            //             trivy image $DOCKER_IMAGE || true
-            //             bandit -r . || true
-            //             '''
-            //         }
-            //     }
+                            // אפשר להוסיף את הקוד כאן לחלק של linting, ברגע שתהיה מוכן
+                            // sh 'pip3 install flake8'
+                            // sh 'flake8 .'
+                            // sh 'hadolint Dockerfile'
+                        }
+                    }
+                }
+                stage('Security Scanning') {
+                    steps {
+                        echo 'Running security scans'
+                        // כאן תוכל להחזיר את הפקודות ברגע שתרצה להפעיל סריקות אבטחה
+                        // sh 'trivy image $DOCKER_IMAGE || true'
+                        // sh 'bandit -r . || true'
+                    }
+                }
             }
         }
 
