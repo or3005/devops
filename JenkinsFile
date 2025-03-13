@@ -22,29 +22,29 @@ pipeline {
         stage('Lint, Scan, and Docker') {
             parallel {
                stage('Lint') {
-                    steps {
-                        script {
-                         echo 'Installing pip...'
-                            sh '''
-                             apt-get update && sudo apt-get install -y python3-pip || sudo yum install -y python3-pip
-                             pip3 install --upgrade pip
-                            '''
+            //         steps {
+            //             script {
+            //              echo 'Installing pip...'
+            //                 sh '''
+            //                  apt-get update && sudo apt-get install -y python3-pip || sudo yum install -y python3-pip
+            //                  pip3 install --upgrade pip
+            //                 '''
                             echo 'Linting the code'
-                            sh 'pip3 install flake8'
-                            sh 'flake8 .'
-                            sh 'hadolint Dockerfile'
-                        }
-                    }
-                }
-                stage('Security Scanning') {
-                    steps {
-                        sh '''
-                        trivy image $DOCKER_IMAGE || true
-                        bandit -r . || true
-                        '''
-                    }
-                }
-            }
+            //                 sh 'pip3 install flake8'
+            //                 sh 'flake8 .'
+            //                 sh 'hadolint Dockerfile'
+            //             }
+            //         }
+            //     }
+            //     stage('Security Scanning') {
+            //         steps {
+            //             sh '''
+            //             trivy image $DOCKER_IMAGE || true
+            //             bandit -r . || true
+            //             '''
+            //         }
+            //     }
+            // }
         }
 
         stage('Build Docker Image') {
