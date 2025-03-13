@@ -1,0 +1,9 @@
+
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+.history
+terraform.exe
+LICENSE.txt
