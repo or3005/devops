@@ -1,0 +1,75 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool: 
+  vmImage: 'ubuntu-latest'
+
+variables:
+# my secrets for docker hub conction and passwords
+  - group: OrSecrets  
+
+jobs:
+- job: Build_and_Push
+  steps:
+  
+  # Checkout the repository
+  # - task: Checkout@2
+  #   displayName: 'Checkout Repository'
+
+  # Install dependencies
+  - script: |
+      echo "Installing dependencies..."
+      sudo apt-get update -y
+      sudo apt-get install -y python3-pip docker.io
+      pip3 install flake8 bandit
+    displayName: 'Install dependencies'
+
+  # Linting
+  - script: |
+      echo "Running Linting..."
+    #  flake8 .  
+    displayName: 'Linting the code'
+  
+  # Security Scanning
+  - script: |
+      echo "Running Security Scan..."
+      bandit -r . 
+    displayName: 'Running security scans'
+    
+  # Build Docker Image
+  - script: |
+      echo "Building Docker image..."
+      docker build -t $(DOCKER_IMAGE) .
+    displayName: 'Build Docker Image'
+
+  # Login to Docker Hub
+  - script: |
+      echo "$(DOCKER_PASSWORD)" | docker login -u $(DOCKER_USERNAME) --password-stdin
+    displayName: 'Docker Login'
+  
+  # Push Docker Image to Docker Hub
+  - script: |
+      echo "Pushing image to Docker Hub..."
+      docker push $(DOCKER_IMAGE)
+    displayName: 'Push Docker Image to Docker Hub'
+
+  
+  # make an artifact for the pipeline so it can be used later or to see what was built
+  - task: PublishBuildArtifacts@1
+    condition: succeededOrFailed()
+    inputs:
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+    displayName: 'Publish Artifacts'
+
+  # Handle success and failure like in my jenkinsFile
+  - script: |
+      if [ $(Build.Status) == "Succeeded" ]; then
+        echo "Pipeline completed successfully!"
+      else
+        echo "Pipeline failed. Check logs."
+      fi
+    displayName: 'Pipeline Success or Failure'
