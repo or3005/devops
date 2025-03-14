@@ -7,3 +7,4 @@
 .history
 terraform.exe
 LICENSE.txt
+docker-compose.yml
