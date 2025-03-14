@@ -1,7 +1,7 @@
 pipeline {
 
     // there will be more staff in here from the exam file
-    agent any
+    agent {label 'docker' }
 
     // add docker credentials in the Jenkins part
     environment {
@@ -14,7 +14,6 @@ pipeline {
             steps {
                 script {
                     echo 'Installing Docker...'
-                    // בדוק אם דוקר מותקן, ואם לא, התקן אותו
                     sh '''
                     if ! command -v docker &> /dev/null
                     then
