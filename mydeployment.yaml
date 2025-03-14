@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: or-deployment
+  labels:
+    app: or
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: or 
+  template:
+    metadata:
+      labels:
+        app: or 
+    spec:
+      containers:
+      - name: or-container
+        image: orbiton3005/my-image:latest
+        ports:
+        - containerPort: 80  
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: or-service
+spec:
+  selector:
+    app: or  
+  ports:
+    - protocol: TCP
+      port: 80     
+      targetPort: 80  
+  type: NodePort  
