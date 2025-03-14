@@ -5,7 +5,7 @@ pipeline {
 
     // add docker credentials in the Jenkins part
     environment {
-        DOCKER_IMAGE = "or3005/my-image"
+        DOCKER_IMAGE = "orbiton3005/my-image"
         DOCKER_CREDENTIALS = "dockerhub-credentials"
     }
 
