@@ -9,7 +9,7 @@ COPY . /app
 
 #ONE OF THIS COMMANDS WILL BE USED
 RUN pip install --no-cache-dir -r requirements.txt
-#RUN npm install
+
 
 
 # stage 2
