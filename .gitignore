@@ -7,4 +7,5 @@
 .history
 terraform.exe
 LICENSE.txt
+volume/workspace/jenpipe
 docker-compose.yml
