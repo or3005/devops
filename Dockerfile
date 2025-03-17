@@ -9,7 +9,7 @@ WORKDIR /app
 COPY . /app
 
 #ONE OF THIS COMMANDS WILL BE USED
-RUN pip install --no-cache-dir -r requirements.txt
+
 
 
 # stage 2
@@ -18,7 +18,7 @@ FROM python:3.9-slim
 
 
 COPY --from=builder /app/requirements.txt .
-
+RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5001
 
 
