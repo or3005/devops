@@ -1,7 +1,8 @@
 FROM python:3.9-slim AS builder
 
-ENV AWS_ACCESS_KEY_ID=<"provided in exam">
-ENV AWS_SECRET_ACCESS_KEY=<"provided in exam">
+# here i pass the secret keys from .env file that will not be pushed to the repository
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
 
 WORKDIR /app
 
@@ -9,7 +10,7 @@ COPY . /app
 
 #ONE OF THIS COMMANDS WILL BE USED
 RUN pip install --no-cache-dir -r requirements.txt
-#RUN npm install
+
 
 
 # stage 2
