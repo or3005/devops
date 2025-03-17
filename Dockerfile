@@ -1,15 +1,16 @@
 FROM python:3.9-slim AS builder
 
-# here i pass the secret keys from .env file that will not be pushed to the repository
+# כאן אני מעביר את המפתחות מהקובץ .env שלא יישלחו ל-repository
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
 
 WORKDIR /app
 
+# מעתיק את כל הקבצים לתוך התיקייה /app
 COPY . /app
 
-#ONE OF THIS COMMANDS WILL BE USED
-
+# התקנת הדרישות (requirements)
+RUN pip install --no-cache-dir -r requirements.txt
 
 
 # stage 2
@@ -17,10 +18,12 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# מעתיק את כל הקבצים מהתיקייה /app בשלב builder (כולל app.py)
+COPY --from=builder /app /app
+
 EXPOSE 5001
 
+RUN echo "Final-image stage has finished"
 
-RUN echo "Final-image stage has finished "
-CMD ["python", "app.py"]
+# תיקון הנתיב בקובץ ה- CMD כדי למצוא את app.py בצורה נכונה
+CMD ["python", "/app/app.py"]
