@@ -17,8 +17,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-
-COPY --from=builder /app .
+COPY --from=builder /app/requirements.txt .
 
 EXPOSE 5001
 
