@@ -1,14 +1,14 @@
 FROM python:3.9-slim AS builder
 
-ENV AWS_ACCESS_KEY_ID=<"provided in exam">
-ENV AWS_SECRET_ACCESS_KEY=<"provided in exam">
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
 
 WORKDIR /app
 
 COPY . /app
 
 RUN apt-get update && apt-get install -y npm
-#ONE OF THIS COMMANDS WILL BE USED
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 

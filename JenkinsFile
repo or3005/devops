@@ -42,19 +42,19 @@ pipeline {
                     steps {
                         script {
                             echo 'Linting the code'
-                            // אפשר להוסיף את הקוד כאן לחלק של linting, ברגע שתהיה מוכן
-                            // sh 'pip3 install flake8'
-                            // sh 'flake8 .'
-                            // sh 'hadolint Dockerfile'
+                          
+                             sh 'pip3 install flake8'
+                             sh 'flake8 . || true'
+                             sh 'hadolint Dockerfile || true'
                         }
                     }
                 }
                 stage('Security Scanning') {
                     steps {
                         echo 'Running security scans'
-                        // כאן תוכל להחזיר את הפקודות ברגע שתרצה להפעיל סריקות אבטחה
-                        // sh 'trivy image $DOCKER_IMAGE || true'
-                        // sh 'bandit -r . || true'
+                
+                         sh 'trivy image $DOCKER_IMAGE || true'
+                         sh 'bandit -r . || true'
                     }
                 }
             }

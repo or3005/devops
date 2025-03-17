@@ -8,3 +8,5 @@
 terraform.exe
 LICENSE.txt
 docker-compose.yml
+.ssh/
+FinalExam.code-workspace

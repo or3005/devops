@@ -1,25 +1,23 @@
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Locating server among [http://jenkins:8080/]
-Mar 14, 2025 10:05:51 AM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
+Mar 17, 2025 12:06:18 PM org.jenkinsci.remoting.engine.JnlpAgentEndpointResolver resolve
 INFO: Remoting server accepts the following protocols: [JNLP4-connect, Ping]
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Agent discovery successful
   Agent address: jenkins
   Agent port:    50000
   Identity:      0f:a6:cd:5f:b6:ae:f8:7a:c5:c3:3c:c1:11:7d:41:e5
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Handshaking
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Connecting to jenkins:50000
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Server reports protocol JNLP4-connect-proxy not supported, skipping
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Trying protocol: JNLP4-connect
-Mar 14, 2025 10:05:51 AM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
+Mar 17, 2025 12:06:18 PM org.jenkinsci.remoting.protocol.impl.BIONetworkLayer$Reader run
 INFO: Waiting for ProtocolStack to start.
-Mar 14, 2025 10:05:51 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Remote identity confirmed: 0f:a6:cd:5f:b6:ae:f8:7a:c5:c3:3c:c1:11:7d:41:e5
-Mar 14, 2025 10:05:52 AM hudson.remoting.Launcher$CuiListener status
+Mar 17, 2025 12:06:18 PM hudson.remoting.Launcher$CuiListener status
 INFO: Connected
-Mar 14, 2025 10:13:46 AM org.eclipse.jgit.util.FS$FileStoreAttributes getFsResolution
-WARNING: Thread[JGit-FileStoreAttributeReader-1,5,main]: got smaller file timestamp on /home/jenkins (C:\), /home/jenkins/workspace/jenpipe/.git/objects: 2025-03-14T10:13:46Z < 2025-03-14T10:13:46.434985Z. Aborting measurement at resolution PT0.565015S.
