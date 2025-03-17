@@ -1,45 +1,29 @@
 pipeline {
 
-    // there will be more staff in here from the exam file
+    // i choose slave node to run the pipeline
     agent {label 'docker' }
 
     // add docker credentials in the Jenkins part
+    // saved in dockerhub-credentials
     environment {
         DOCKER_IMAGE = "orbiton3005/my-image"
         DOCKER_CREDENTIALS = "dockerhub-credentials"
     }
 
     stages {
-        //  stage('Install Docker') {
-        //     steps {
-        //         script {
-        //             echo 'Installing Docker...'
-        //             sh '''
-        //             if ! command -v docker &> /dev/null
-        //             then
-        //                 echo "Docker could not be found, installing..."
-        //                 apt-get update -y
-        //                 apt-get install -y docker.io
-        //                 systemctl enable docker
-        //                 systemctl start docker
-        //             else
-        //                 echo "Docker is already installed"
-        //             fi
-        //             '''
-        //         }
-        //     }
-        // }
+   
         stage('Clone Repository') {
             steps {
-                // I switch to docker branch to get the Dockerfile
+                // I switch to docker branch to get the Dockerfile most updated
                 git branch: 'docker', url: 'https://github.com/or3005/devops.git'
             }
         }
 
-        stage('Lint, Scan, and Docker') {
+        stage('Lint, Scan') {
             parallel {
                stage('Lint') {
                     steps {
+                        // part for lint
                         script {
                             echo 'Linting the code'
                           
@@ -49,7 +33,9 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Security Scanning') {
+                    // part for security
                     steps {
                         echo 'Running security scans'
                 
@@ -59,7 +45,7 @@ pipeline {
                 }
             }
         }
-
+        // part to build docker image
         stage('Build Docker Image') {
             steps {
                 script {
@@ -68,7 +54,7 @@ pipeline {
                 }
             }
         }
-
+        // part to push docker image to docker hub
       stage('Push to Docker Hub') {
          steps {
             withDockerRegistry([credentialsId: DOCKER_CREDENTIALS, url: 'https://index.docker.io/v1/']) {
@@ -77,10 +63,10 @@ pipeline {
                 '''
         }
     }
-}
 
-    }
 
+   
+    // part for to see if everything is working in success or failure
     post {
         success {
             echo 'Pipeline completed successfully!'
