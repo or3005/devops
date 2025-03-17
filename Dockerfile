@@ -15,10 +15,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # stage 2
 FROM python:3.9-slim
 
+WORKDIR /app
 
 
-COPY --from=builder /app /app
+COPY --from=builder /app .
 
+EXPOSE 5001
 
 EXPOSE 5001
 
