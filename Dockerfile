@@ -22,7 +22,6 @@ COPY --from=builder /app .
 
 EXPOSE 5001
 
-EXPOSE 5001
 
 RUN echo "Final-image stage has finished "
 CMD ["python", "app.py"]
