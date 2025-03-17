@@ -6,16 +6,17 @@ ARG AWS_SECRET_ACCESS_KEY
 
 WORKDIR /app
 
-COPY . /app
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt ./
+RUN pip install --upgrade pip && pip install -r requirements.txt
+COPY app.py ./
 # stage 2
 FROM python:3.9-slim
 
 WORKDIR /app
 #i couldnt run it with the instalation on the lasr build so i installed it here
 # i know you whanted an multistage but for the lack of time i did it to continue working
-COPY --from=builder /app/requirements.txt /.
-
+COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY --from=builder /app/app.py ./
 EXPOSE 5001
 
 RUN echo "Final-image stage has finished"
