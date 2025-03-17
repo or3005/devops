@@ -12,13 +12,13 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-
 # stage 2
 FROM python:3.9-slim
 
-WORKDIR /app
 
-COPY --from=builder /app/requirements.txt /app/requirements.txt
+
+COPY --from=builder /app /app
+
 
 EXPOSE 5001
 
