@@ -20,7 +20,7 @@ WORKDIR /app
 
 # מעתיק את כל הקבצים מהתיקייה /app בשלב builder (כולל app.py)
 COPY --from=builder /app /app
-
+RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5001
 
 RUN echo "Final-image stage has finished"
