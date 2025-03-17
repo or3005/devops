@@ -7,3 +7,6 @@
 .history
 terraform.exe
 LICENSE.txt
+aws-credentials.env
+.ssh
+FinalExam.code-workspace

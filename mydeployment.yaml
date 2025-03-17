@@ -8,29 +8,41 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: or 
+      app: or
   template:
     metadata:
       labels:
-        app: or 
+        app: or
     spec:
       containers:
-      - name: or-container
-        image: orbiton3005/my-image:latest
-        ports:
-        - containerPort: 80  
+        - name: or-container
+          image: orbiton3005/my-image:latest
+          ports:
+            - containerPort: 5001
+            ### secrets stored in a saprate file could aws-credentials.env 
+            ### file that is in the gitignore file
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-secret
+                  key: AWS_SECRET_ACCESS_KEY
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
   name: or-service
 spec:
   selector:
-    app: or  
+    app: or
   ports:
     - protocol: TCP
-      port: 80     
-      targetPort: 80  
-  type: NodePort  
+      port: 80
+      targetPort: 5001
+  type: LoadBalancer

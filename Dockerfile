@@ -1,25 +1,22 @@
-FROM python:3.9-slim AS builder
-
-ENV AWS_ACCESS_KEY_ID=<"provided in exam">
-ENV AWS_SECRET_ACCESS_KEY=<"provided in exam">
-
-WORKDIR /app
-
-COPY . /app
-
-#ONE OF THIS COMMANDS WILL BE USED
-RUN pip install --no-cache-dir -r requirements.txt
-RUN npm install
-
-
-# stage 2
+# השתמש בתמונה בסיסית
 FROM python:3.9-slim
 
+# עדכן את מערכת הקבצים
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# העתק את קבצי הקוד שלך לתוך הקונטיינר
+COPY . /app
+
+# הגדר את תיקיית העבודה
 WORKDIR /app
 
-COPY --from=builder /app /app
+# התקן את הדרישות של האפליקציה
+RUN pip install -r requirements.txt
 
-EXPOSE 5001
+# פתח את הפורט של השרת
+EXPOSE 80
 
-RUN echo "Final-image stage has finished "
-CMD ["python", "app.py"]
+# הרץ את האפליקציה
+CMD ["python3", "app.py"]
