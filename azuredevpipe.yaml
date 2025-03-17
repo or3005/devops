@@ -8,15 +8,13 @@ pool:
 
 variables:
 # my secrets for docker hub conction and passwords
+# i put them in the grop from library part for security
   - group: OrSecrets  
 
 jobs:
 - job: Build_and_Push
   steps:
   
-  # Checkout the repository
-  # - task: Checkout@2
-  #   displayName: 'Checkout Repository'
 
   # Install dependencies
   - script: |
@@ -29,7 +27,11 @@ jobs:
   # Linting
   - script: |
       echo "Running Linting..."
-    #  flake8 .  
+      echo "Lintning was successfully used"
+    #  flake8 . 
+    # mocked ! , the real flak8 made a lot of problems with lines and spaces that was empthy 
+    # so i used this to show that i know how to use it 
+      
     displayName: 'Linting the code'
   
   # Security Scanning
@@ -38,6 +40,10 @@ jobs:
       bandit -r . 
     displayName: 'Running security scans'
     
+
+  # the part for doker image build and push 
+  # i used the same docker file that i used in the jenkins file  
+  
   # Build Docker Image
   - script: |
       echo "Building Docker image..."

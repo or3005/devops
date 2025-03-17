@@ -7,3 +7,5 @@
 .history
 terraform.exe
 LICENSE.txt
+.ssh
+FinalExam.code-workspace
