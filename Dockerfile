@@ -18,7 +18,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY --from=builder /app
+COPY --from=builder /app .
 
 EXPOSE 5001
 
