@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: "your-docker-username/flask-aws-monitor"
+  tag: "latest"
+
+service:
+  type: LoadBalancer
+
+ingress:
+  enabled: false
+  host: "flask-aws-monitor.example.com"
+
+env:
+  AWS_ACCESS_KEY_ID: ""
+  AWS_SECRET_ACCESS_KEY: ""
+
+resources: {}
+
+serviceAccount:
+  create: true
+
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
