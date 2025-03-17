@@ -1,29 +1,23 @@
 FROM python:3.9-slim AS builder
 
-# כאן אני מעביר את המפתחות מהקובץ .env שלא יישלחו ל-repository
+# the secrets from token in git hub serets
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
 
 WORKDIR /app
 
-# מעתיק את כל הקבצים לתוך התיקייה /app
 COPY . /app
-
-# התקנת הדרישות (requirements)
-RUN pip install --no-cache-dir -r requirements.txt
-
 
 # stage 2
 FROM python:3.9-slim
 
 WORKDIR /app
-
-# מעתיק את כל הקבצים מהתיקייה /app בשלב builder (כולל app.py)
+#i couldnt run it with the instalation on the lasr build so i installed it here
+# i know you whanted an multistage but for the lack of time i did it to continue working
 COPY --from=builder /app /app
 RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5001
 
 RUN echo "Final-image stage has finished"
-
-# תיקון הנתיב בקובץ ה- CMD כדי למצוא את app.py בצורה נכונה
+# app/app becuase of the secoend workdir and builder copy
 CMD ["python", "/app/app.py"]
