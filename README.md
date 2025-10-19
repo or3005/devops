@@ -1,7 +1,34 @@
-﻿# devops final exam
- # part terraform
+🌍 terraform — Infrastructure as Code
+📖 Overview
 
-in this branch i made terraform part.
-two files one is builder.tf that build ec2 machine as requsted
-ssh_keys- part to make an ssh key that i use in build.tf
-as you will see in the screenshot i was able to connect to my new ec2 machine and installed docker with script.
+This branch uses Terraform to define and provision cloud infrastructure required for the CI/CD and deployment environments.
+
+🧱 Purpose
+
+Automate provisioning of VMs, networking, or Kubernetes clusters.
+
+Maintain infrastructure as version-controlled code.
+
+📁 Key Files
+
+main.tf – main Terraform configuration.
+
+variables.tf – defines inputs like region, instance type, etc.
+
+outputs.tf – defines outputs like IP addresses or instance IDs.
+
+⚙️ Typical Commands
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+
+🧩 Possible Resources
+
+Virtual Machines (for Jenkins or Docker host)
+
+Resource groups (Azure)
+
+Kubernetes clusters
+
+Storage and networking components
